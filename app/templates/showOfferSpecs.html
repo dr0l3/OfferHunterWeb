@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for form in forms %}
+        <form id="offerline{{form.id.data}}" method="POST" action="" name=test">
+            <div>
+                {{ form.itemString.label }}:
+                {{ form.itemString }}
+                {{ form.itemBrand.label }}:
+                {{ form.itemBrand }}
+                {{ form.itemPricePerUnit.label }}:
+                {{ form.itemPricePerUnit }}
+                {{ form.itemPrice.label }}:
+                {{ form.itemPrice }}
+                {{ form.id }}
+                {{ form.submit }}
+            </div>
+        </form>
+    {% endfor %}
+{% endblock %}

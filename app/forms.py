@@ -2,11 +2,14 @@ __author__ = 'drole'
 
 
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, TextAreaField, DecimalField
+from wtforms import StringField, BooleanField, TextAreaField, DecimalField, SubmitField, HiddenField
 from wtforms.validators import DataRequired, Length
 
+
 class EditForm(Form):
-    offerItemString = StringField('offer-item-string2', validators=[DataRequired()])
-    itemBrand = StringField('offer-item-brand')
-    itemPricePerUnit = DecimalField('offer-item-pricePerUnit')
-    itemPrice = DecimalField('offer-item-price')
+    itemString = StringField(u'Name of the item', validators=[DataRequired()])
+    itemBrand = StringField(u'Brand requirement if any')
+    itemPricePerUnit = DecimalField(u'Price per unit')
+    itemPrice = DecimalField(u'Price for a unit')
+    id = HiddenField()
+    submit = SubmitField(u'Update')
