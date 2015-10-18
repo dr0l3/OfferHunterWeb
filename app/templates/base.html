@@ -11,7 +11,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script>
         function update(nameOfList, indexOfLine){
-            alert("LOL");
             $.post('/update', {nameOfList : nameOfList,
                 indexOfLine: indexOfLine,
                 itemString: $('#itemString'+nameOfList+indexOfLine).val(),

@@ -93,10 +93,28 @@ def index():
     #create object from the stuff we get
     searches = db.lrange('listone', 0, -1)
     searches = [x.decode('unicode_escape') for x in searches]
-    searches = [json.loads(x.replace("'", "\"").replace("u\"", "\"").replace("u\'", "\'")) for x in searches]
+    searches = [json.loads(x.replace("'", "\"").replace("u\"", "\"")) for x in searches]
     for idx, search in enumerate(searches):
-        form = EditForm(itemString=search['itemString'].encode('latin-1').decode('utf-8'),
-                        itemPricePerUnit=search['itemPricePerUnit'],
+        try:
+            itemString = search['itemString'].encode('latin-1').decode('utf-8')
+        except KeyError:
+            itemString = ""
+        try:
+            itemBrand = search['itemBrand'].encode('latin-1').decode('utf-8')
+        except KeyError:
+            itemBrand = None
+        try:
+            itemPricePerUnit = search['itemPricePerUnit']
+        except KeyError:
+            itemPricePerUnit = None
+        try:
+            itemPrice = search['itemPrice']
+        except KeyError:
+            itemPrice = None
+        form = EditForm(itemString=itemString,
+                        itemBrand=itemBrand,
+                        itemPricePerUnit=itemPricePerUnit,
+                        itemPrice=itemPrice,
                         id=str(idx),
                         listId="listone")
         forms.append(form)
