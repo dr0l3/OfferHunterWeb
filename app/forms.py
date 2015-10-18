@@ -12,4 +12,5 @@ class EditForm(Form):
     itemPricePerUnit = DecimalField(u'Price per unit')
     itemPrice = DecimalField(u'Price for a unit')
     id = HiddenField()
+    listId = HiddenField()
     submit = SubmitField(u'Update')

@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
     {% for form in forms %}
-        <form id="offerline{{form.id.data}}" method="POST" action="" name=test">
+        <form id="offerline{{form.id.data}}" method="POST"
+              action="javascript:update( '{{ form.listId.data }}', '{{ form.id.data }}' )"
+              name="test">
             <div>
                 {{ form.itemString.label }}:
-                {{ form.itemString }}
+                {{ form.itemString(id="itemString"+form.listId.data+form.id.data) }}
                 {{ form.itemBrand.label }}:
-                {{ form.itemBrand }}
+                {{ form.itemBrand(id="itemBrand"+form.listId.data+form.id.data) }}
                 {{ form.itemPricePerUnit.label }}:
-                {{ form.itemPricePerUnit }}
+                {{ form.itemPricePerUnit(id="itemPricePerUnit"+form.listId.data+form.id.data) }}
                 {{ form.itemPrice.label }}:
-                {{ form.itemPrice }}
+                {{ form.itemPrice(id="itemPrice"+form.listId.data+form.id.data) }}
                 {{ form.id }}
+                {{ form.listId }}
                 {{ form.submit }}
             </div>
         </form>

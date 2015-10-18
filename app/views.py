@@ -45,6 +45,9 @@ def test():
 
 @app.route('/update', methods=['POST'])
 def update():
+    print("LOL")
+    print(request)
+    print(request.form['itemString'])
     #connect to server
     db = redis.StrictRedis(connection_pool=POOL)
     #get the parameters
@@ -55,12 +58,13 @@ def update():
     itemPrice = request.form['itemPrice']
     itemPricePerUnit = request.form['itemPricePerUnit']
     #convert to dict
-    offerline = {'itemString': itemString,
-                 'itemBrand': itemBrand}
-    if itemPrice is not None:
-        offerline['itemPricePerUnit'] = int(itemPrice)
-    if itemPricePerUnit is not None:
-        offerline['itemPricePerUnit'] = int(itemPricePerUnit)
+    offerline = {'itemString': itemString}
+    if not itemBrand == "":
+        offerline['itemBrand'] = itemBrand
+    if not itemPrice == "":
+        offerline['itemPricePerUnit'] = float(itemPrice)
+    if not itemPricePerUnit == "":
+        offerline['itemPricePerUnit'] = float(itemPricePerUnit)
     #send to server
     db.lset(name, indexOfLine, offerline)
     return jsonify({'status': 200,
@@ -89,11 +93,12 @@ def index():
     #create object from the stuff we get
     searches = db.lrange('listone', 0, -1)
     searches = [x.decode('unicode_escape') for x in searches]
-    searches = [json.loads(x.replace("'", "\"")) for x in searches]
+    searches = [json.loads(x.replace("'", "\"").replace("u\"", "\"").replace("u\'", "\'")) for x in searches]
     for idx, search in enumerate(searches):
         form = EditForm(itemString=search['itemString'].encode('latin-1').decode('utf-8'),
                         itemPricePerUnit=search['itemPricePerUnit'],
-                        id=idx)
+                        id=str(idx),
+                        listId="listone")
         forms.append(form)
     return render_template("showOfferSpecs.html",
                            forms=forms)
