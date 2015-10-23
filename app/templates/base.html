@@ -22,6 +22,30 @@
             });
         }
     </script>
+    <script>
+        function insert(nameOfList, indexOfLine){
+            $.post('/insert', {nameOfList : nameOfList,
+                itemString: $('#itemString'+nameOfList+indexOfLine).val(),
+                itemBrand: $('#itemBrand'+nameOfList+indexOfLine).val(),
+                itemPricePerUnit: $('#itemPricePerUnit'+nameOfList+indexOfLine).val(),
+                itemPrice: $('#itemPrice'+nameOfList+indexOfLine).val()
+            }).done(function(response) {
+                window.location.reload();
+            }).fail(function(response){
+            });
+        }
+    </script>
+    <script>
+    function login(user, pw){
+        $.post('/trylogin', {username : $('#'+user).val(),
+            pw: $('#'+pw).val()
+        }).done(function(response) {
+            if (response['message'] === 'ok')
+                window.location.href = "/home";
+        }).fail(function(response){
+        });
+    }
+</script>
 </head>
 <body>
 <div>Microblog: <a href="/index">Home</a></div>

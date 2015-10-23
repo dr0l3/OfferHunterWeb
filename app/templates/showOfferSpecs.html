@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-    {% for form in forms %}
+    <form id="offerlineAdd" method="post"
+          action="javascript:insert( '{{ insertform.listId.data }}', '{{ insertform.id.data }}' )">
+        <div>
+            {{ insertform.itemString.label }}:
+            {{ insertform.itemString(id="itemString"+insertform.listId.data+insertform.id.data) }}
+            {{ insertform.itemBrand.label }}:
+            {{ insertform.itemBrand(id="itemBrand"+insertform.listId.data+insertform.id.data) }}
+            {{ insertform.itemPricePerUnit.label }}:
+            {{ insertform.itemPricePerUnit(id="itemPricePerUnit"+insertform.listId.data+insertform.id.data) }}
+            {{ insertform.itemPrice.label }}:
+            {{ insertform.itemPrice(id="itemPrice"+insertform.listId.data+insertform.id.data) }}
+            {{ insertform.id }}
+            {{ insertform.listId }}
+            {{ insertform.submit }}
+        </div>
+    </form>
+    {% for form in updateforms %}
         <form id="offerline{{form.id.data}}" method="POST"
               action="javascript:update( '{{ form.listId.data }}', '{{ form.id.data }}' )"
               name="test">

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <form id="loginform" method="post"
+          action="javascript:login( 'username', 'userpw' )">
+        <div>
+            {{ loginform.userName.label }}:
+            {{ loginform.userName(id="username") }}
+            {{ loginform.userpw.label }}:
+            {{ loginform.userpw(id="userpw") }}
+            {{ loginform.submit }}
+        </div>
+    </form>
+{% endblock %}
