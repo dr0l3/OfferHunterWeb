@@ -7,7 +7,7 @@ from app import app
 import redis
 import json
 
-POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
+POOL = redis.ConnectionPool(host='redis', port=6379, db=0)
 
 
 @app.route('/trylogin', methods=['POST'])
