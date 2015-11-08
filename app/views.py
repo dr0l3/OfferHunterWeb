@@ -7,7 +7,7 @@ from app import app
 import redis
 import json
 
-POOL = redis.ConnectionPool(host='redis', port=6379, db=0)
+POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
 
 
 @app.route('/trylogin', methods=['POST'])
@@ -16,18 +16,15 @@ def trylogin():
     pw = request.form['pw']
     db = redis.StrictRedis(connection_pool=POOL)
     if db.hget('userRecords', user) == pw:
-        print("success")
         session['user'] = user
         return jsonify({'status': 200,
                  'message': 'ok'})
-    print("fail")
     return jsonify({'status': 406,
                     'message': 'bad login'})
 
 
 @app.route('/insert', methods=['POST'])
 def insert():
-    print(request)
     db = redis.StrictRedis(connection_pool=POOL)
     #get the parameters
     name = request.form['nameOfList']
@@ -40,7 +37,7 @@ def insert():
     if not itemBrand == "":
         offerline['itemBrand'] = itemBrand
     if not itemPrice == "":
-        offerline['itemPricePerUnit'] = float(itemPrice)
+        offerline['itemPrice'] = float(itemPrice)
     if not itemPricePerUnit == "":
         offerline['itemPricePerUnit'] = float(itemPricePerUnit)
     #send to server
@@ -55,9 +52,6 @@ def insert():
 
 @app.route('/update', methods=['POST'])
 def update():
-    print("LOL")
-    print(request)
-    print(request.form['itemString'])
     #connect to server
     db = redis.StrictRedis(connection_pool=POOL)
     #get the parameters
@@ -72,7 +66,7 @@ def update():
     if not itemBrand == "":
         offerline['itemBrand'] = itemBrand
     if not itemPrice == "":
-        offerline['itemPricePerUnit'] = float(itemPrice)
+        offerline['itemPrice'] = float(itemPrice)
     if not itemPricePerUnit == "":
         offerline['itemPricePerUnit'] = float(itemPricePerUnit)
     #send to server
@@ -133,7 +127,6 @@ def home():
                         id=str(idx),
                         listId=user)
         updateforms.append(form)
-    print("go render")
     return render_template("showOfferSpecs.html",
                            updateforms=updateforms,
                            insertform=insertform)
